@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { app } from "../firebase";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from 'react-router-dom';
 
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
@@ -10,15 +10,25 @@ function Signin() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
     const signinUser = () => {
         signInWithEmailAndPassword(auth, email, password)
-            .then((value) => { alert("Welcome back."); })
+            .then((value) => { 
+                // alert("Welcome back."); 
+                navigate("/news-feed");
+                
+            })
             .catch((err) => { alert("Please enter right email/password."); });
     };
 
     const signupWithGoogle = () => {
-        signInWithPopup(auth, googleProvider);
+        signInWithPopup(auth, googleProvider)
+        .then((value) => { 
+            // alert("Welcome back."); 
+            navigate("/news-feed");
+            
+        });
     };
 
 

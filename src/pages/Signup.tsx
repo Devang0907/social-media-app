@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
 import { app } from "../firebase";
+import { useNavigate } from 'react-router-dom';
 
 const auth = getAuth(app);
 
@@ -9,10 +10,14 @@ function Signup() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
     const createUser = () => {
         createUserWithEmailAndPassword(auth, email, password)
-            .then(() => { alert("You are Registered."); })
+            .then(() => { 
+                alert("You are Registered."); 
+                navigate("/");
+            })
             .catch(() => { alert("Email already exists."); });
     };
 
